@@ -5,7 +5,8 @@ import { createStyles } from '@mantine/core';
 import { TextInput, Checkbox, Button, Group, Box } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import html_gen from './joes-tools/html'
-
+import { useRef } from 'react';
+import { RadioGroup, Radio } from '@mantine/core';
 const useStyles = createStyles((theme, _params, getRef) => ({
   wrapper: {
     // subscribe to color scheme changes right in your styles
@@ -42,42 +43,18 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 
 function App() {
   const { classes } = useStyles();
-  const form = useForm({
-    initialValues: {
-      email: 'jjackson@itscovered.com',
-      termsOfService: false,
-    },
-
-    validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-    },
-  });
+  const ref = useRef<HTMLInputElement>();
   return (
-    <div className={classes.wrapper}>
-      <div id= "display"></div>
-      <div className={classes.child}>Custom CSS</div>
-
-      <Box sx={{ maxWidth: 300 }} mx="auto">
-      <form onSubmit={form.onSubmit(html_gen)}>
-        <TextInput
-          required
-          label="Email"
-          placeholder="your@email.com"
-          {...form.getInputProps('email')}
-        />
-
-        <Checkbox
-          mt="md"
-          label="I agree to sell my privacy"
-          {...form.getInputProps('termsOfService', { type: 'checkbox' })}
-        />
-
-        <Group position="right" mt="md">
-          <Button type="submit">Submit</Button>
-        </Group>
-      </form>
-    </Box>
-    </div>
+    <RadioGroup
+      label="Select your favorite framework/library"
+      description="This is anonymous"
+      required
+    >
+      <Radio value="button" label="Button" />
+      <Radio value="color" label="Color Picker" />
+      <Radio value="ng" label="Angular" />
+      <Radio value="vue" label="Vue" />
+    </RadioGroup>
   );
 
 }
